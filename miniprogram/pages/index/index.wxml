@@ -1,0 +1,42 @@
+<!--index.wxml-->
+<view class="container">
+ <button class="upload" type="default" bindtap="uploadFile"> 请上传学生证
+</button>
+ <form bindsubmit="addNameCard">
+ <view>
+ <view class="label">
+ 姓名:
+ </view>
+ <input
+ name="name"
+ type="text"
+ value="Tom"
+ ></input>
+ <view class="label">
+ 性别:
+ </view>
+ <input
+ name="gender"
+ type="text"
+ value="男"
+ ></input>
+ <view class="label">
+学号 :
+ </view>
+ <input
+ name="studentId"
+ type="text"
+ value="1170300217"
+ ></input>
+ </view>
+ <view class="label">
+院系
+ </view>
+ <input
+ name="department"
+ type="text"
+ value="计算机"
+ ></input>
+ <button form-type="submit" type="primary">提交</button>
+ </form>
+</view>

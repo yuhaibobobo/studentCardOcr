@@ -4,14 +4,11 @@ const app = getApp()
 const mapping = require('../common/mapping.js');
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     fileID: null,
-    coverImage: null,
     imgPath: null,
-    img64: null,
     formData: []
   },
   //事件处理函数
@@ -61,41 +58,49 @@ Page({
     wx.chooseImage({
       count: 1,
       sizeType: [ 'compressed'],
-      sourceType: ['album', 'camera'], 
+      sourceType: ['album','camera'], 
       success: dRes => {
         // 展示加载组件
         wx.showLoading({
           title: '上传文件',
         });
-        this.setData({
-          imgPath: dRes.tempFilePaths[0]
-        });
-        let cloudPath = `${Date.now()}-${Math.floor(Math.random(0, 1) *
-          1000)}.png`;
-        // 云开发新接口，用于上传文件
-        wx.cloud.uploadFile({
-          cloudPath: cloudPath,
-          filePath: dRes.tempFilePaths[0],
-          success: res => {
-            if (res.statusCode < 300) {
-              console.log(res.fileID);
-              this.setData({
-                fileID: res.fileID,
-              },() =>{
-                this.parseStudentCard();
-                wx.hideLoading();
+        wx.saveFile({
+          tempFilePath: dRes.tempFilePaths[0],
+          success: res =>{
+            const savedFilePath=res.savedFilePath;
+            console.log(savedFilePath)
+            this.setData({
+              imgPath : savedFilePath
+            },() =>{
+              let cloudPath = `${Date.now()}-${Math.floor(Math.random(0, 1) *
+                1000)}.png`;
+              // 云开发新接口，用于上传文件
+              wx.cloud.uploadFile({
+                cloudPath: cloudPath,
+                filePath: this.data.imgPath,
+                success: res => {
+                  if (res.statusCode < 300) {
+                    console.log(res.fileID);
+                    this.setData({
+                      fileID: res.fileID,
+                    }, () => {
+                      this.parseStudentCard();
+                      wx.hideLoading();
+                    });
+                  }
+                },
+                fail: err => {
+                  // 隐藏加载组件并提示
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: '上传失败',
+                    icon: 'none'
+                  });
+                },
               });
-            }
-          },
-          fail: err => {
-            // 隐藏加载组件并提示
-            wx.hideLoading();
-            wx.showToast({
-              title: '上传失败',
-              icon: 'none'
-            });
-          },
-        });
+            })
+          }
+        })
       },
       fail: console.error,
     })

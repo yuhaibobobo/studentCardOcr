@@ -1,29 +1,6 @@
 
-form input {
- border: 2rpx solid #eee;
- margin: 10rpx 0;
- padding: 10rpx;
- width: 600rpx;
- font-size: 28rpx;
-}
-form textarea {
- border: 2rpx solid #eee;
- width: 600rpx;
- min-height: 400rpx;
- margin: 10rpx 0;
- padding: 10rpx;
- font-size: 28rpx;
-}
-form button {
- width: 620rpx;
- margin: 20rpx 0 0;
- font-size: 28rpx;
-}
 button.upload {
  width: 620rpx;
  font-size: 28rpx;
  margin: 40rpx 0 20rpx 0;
-}
-.label {
- font-size: 24rpx;
 }

@@ -1,0 +1,1 @@
+<button bindtap="uploadImage">人像比对</button>

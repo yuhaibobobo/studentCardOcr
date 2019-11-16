@@ -1,0 +1,6 @@
+button {
+ width: 620rpx;
+ height: 1000rpx;
+ margin: 20rpx 40rpx 40rpx;
+ font-size: 50rpx;
+}

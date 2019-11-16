@@ -1,4 +1,4 @@
-// pages/success/index.js
+// miniprogram/pages/fail/index.js
 Page({
 
   /**

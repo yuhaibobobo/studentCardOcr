@@ -58,7 +58,7 @@ Page({
     wx.chooseImage({
       count: 1,
       sizeType: [ 'compressed'],
-      sourceType: ['album','camera'], 
+      //sourceType: ['album','camera'], 
       success: dRes => {
         // 展示加载组件
         wx.showLoading({
@@ -177,7 +177,6 @@ Page({
     console.log("添加学生");
     const formData = this.data.formData;
     let imgPath = this.data.imgPath;
-    formData["imgPath"] = imgPath;
     wx.showLoading({
       title: '添加中'
     });
@@ -186,9 +185,10 @@ Page({
       data: formData
     }).then((res) => {
       wx.hideLoading();
-      //app.globalData.namecard.id = res._id;
-      wx.navigateTo({
-        url: '../success/index'
+      let url = '../faceCompare/index?imgPath='+this.data.imgPath
+      //console.log(url)
+      wx.redirectTo({
+        url: url
       });
     }).catch((e) => {
       console.log("添加名片信息失败", e)

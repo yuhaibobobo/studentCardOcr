@@ -1,4 +1,5 @@
 <!--index.wxml-->
  <button class="upload" type="default" bindtap="uploadFile"> 请上传学生证
  </button>
+ <canvas canvas-id="canvas" style="width:{{cWidth}}px;height:{{cHeight}}px;position: absolute;left:-1000px;top:-1000px;"></canvas>
 

@@ -9,6 +9,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     fileID: null,
     imgPath: null,
+    varify: false,
     formData: []
   },
   //事件处理函数
@@ -110,6 +111,7 @@ Page({
  * 调用接口解析名片
  */
   parseStudentCard() {
+    let that = this 
     console.log('解析名片');
     wx.showLoading({
       title: '解析名片',
@@ -134,11 +136,20 @@ Page({
       console.log(res.result)  
       let data = this.handleData(res.result.items);
       console.log(data);
-      this.setData({
-        formData: data
-      });
-      this.addStudent();
-      wx.hideLoading();
+      if(that.data.varify == true){
+        this.setData({
+          formData: data
+        });
+        this.addStudent();
+        wx.hideLoading();
+      }else{
+        wx.hideLoading();
+        wx.showToast({
+          title: '非学生卡',
+          icon: 'none',
+          duration: 2000
+        });
+      }
     }).catch(err => {
       console.error('解析失败，请重试。', err);
       wx.showToast({
@@ -153,11 +164,17 @@ Page({
  * @param {Object} data
  */
   handleData(data) {
+    let that = this
     let reg = ['姓名', '性别', '学号', '院系']
     let returnData = {};
     //console.log("处理名片数据", data);
     data.map(item => {
       let txt = item.text;
+      if(new RegExp('学生卡是学生的身份证').test(txt) == true){
+        that.setData({
+          varify: true
+        })
+      }
       reg.map(regExp => {
         var patt = new RegExp(regExp);
         if (patt.test(txt) == true) {
